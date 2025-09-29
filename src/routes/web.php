@@ -53,5 +53,10 @@ Route::middleware(['can:manage-users'])->prefix('dashboard')->name('dashboard.')
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 });
 
+Route::middleware(['auth', 'can:admin-access'])->prefix('dashboard')->group(function () {
+    Route::get('/stats', function () {
+        return view('dashboard.admin_stats'); 
+    })->name('dashboard.stats');
+});
 
 require __DIR__.'/auth.php';

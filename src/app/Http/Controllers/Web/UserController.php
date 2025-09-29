@@ -29,6 +29,6 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('dashboard.users.index')->with('success', 'Роль обновлена.');
+        return redirect()->route('dashboard.users.index')->with('success', 'Role updated.');
     }
 }

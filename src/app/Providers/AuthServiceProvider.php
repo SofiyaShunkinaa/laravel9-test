@@ -31,5 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('manage-users', [\App\Policies\UserPolicy::class, 'manageUsers']);
+        Gate::define('admin-access', fn($user) => $user->role->name === 'admin');
+
     }
 }
