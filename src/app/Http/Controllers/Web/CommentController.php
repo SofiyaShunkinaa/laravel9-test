@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    public function index()
+    {
+        $user = auth()->user();
+        $query = Comment::with(['post', 'author'])->latest();
+        if (!$user->isAdmin()) {
+            $query->where('author_id', $user->id);
+        }
+        $comments = $query->paginate(10);
+
+        return view('dashboard.comments.index', compact('comments'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -34,6 +46,13 @@ class CommentController extends Controller
         return redirect()->route('posts.show', $post)->with('success', 'Comment added successfully.');
     }
 
+    public function edit(Comment $comment)
+    {
+        $this->authorize('update', $comment);
+
+        return view('dashboard.comments.edit', compact('comment'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -51,7 +70,7 @@ class CommentController extends Controller
 
         $comment->update($data);
 
-        return redirect()->back()->with('success', 'Comment updated successfully.');
+        return redirect()->route('dashboard.comments.index')->with('success', 'Comment updated successfully.');
     }
 
     /**

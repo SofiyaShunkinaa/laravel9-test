@@ -1,0 +1,46 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-2xl mx-auto py-8">
+    <h1 class="text-2xl font-bold mb-6">Создать новый пост</h1>
+
+    <form method="POST" action="{{ route('dashboard.posts.store') }}">
+        @csrf
+
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-medium mb-1">Заголовок</label>
+            <input type="text" name="title" id="title" class="w-full border-gray-300 rounded px-3 py-2"
+                value="{{ old('title') }}" required>
+            @error('title')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="body" class="block text-gray-700 font-medium mb-1">Текст поста</label>
+            <textarea name="body" id="body" rows="8" class="w-full border-gray-300 rounded px-3 py-2" required>{{ old('body') }}</textarea>
+            @error('body')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <input type="hidden" name="status" id="status" value="draft">
+
+        <div class="flex items-center justify-between mt-6">
+            <div>
+                <button type="submit" name="action" value="draft"
+                        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Сохранить в черновик
+                </button>
+
+                <button type="submit" name="action" value="publish"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-2">
+                    Опубликовать
+                </button>
+            </div>
+
+            <a href="{{ url()->previous() }}" class="text-gray-600 hover:underline">Назад</a>
+        </div>
+    </form>
+</div>
+@endsection
