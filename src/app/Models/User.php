@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Role;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -44,6 +45,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        // Clear users statistics cache when user is created, updated, or deleted
+        static::created(function () {
+            Cache::forget('stats_users');
+        });
+
+        static::updated(function () {
+            Cache::forget('stats_users');
+        });
+
+        static::deleted(function () {
+            Cache::forget('stats_users');
+        });
+    }
 
     public function role()
     {

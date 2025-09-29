@@ -33,42 +33,9 @@ class PostController extends Controller
         return view('dashboard.posts.index', compact('posts'));
     }
 
-    public function publicIndex(Request $request)
+    public function publicIndex()
     {
-        $query = Post::with(['author:id,name,email', 'latestComment'])
-            ->withCount('comments');
-
-        if ($q = $request->get('q')) {
-            $query->where(function($qBuilder) use ($q) {
-                $qBuilder->where('title', 'ILIKE', "%{$q}%")
-                        ->orWhere('body', 'ILIKE', "%{$q}%");
-            });
-        }
-
-        if ($status = $request->get('status')) {
-            $query->where('status', $status);
-        }
-
-        $from = $request->get('from');
-        $to = $request->get('to');
-
-        if ($from) {
-            $query->whereDate('published_at', '>=', $from);
-        }
-        if ($to) {
-            $query->whereDate('published_at', '<=', $to);
-        }
-
-        $sortBy = in_array($request->get('sort_by'), ['published_at', 'title', 'created_at']) 
-            ? $request->get('sort_by') 
-            : 'published_at';
-        $direction = $request->get('direction') === 'asc' ? 'asc' : 'desc';
-
-        $posts = $query->orderBy($sortBy, $direction)
-            ->paginate(10)
-            ->appends($request->only(['q','status','from','to','sort_by','direction']));
-
-        return view('pages.home', compact('posts','sortBy','direction','q','status','from','to'));
+        return view('pages.home');
     }
 
     public function publicShow(Post $post)
@@ -110,9 +77,18 @@ class PostController extends Controller
 
         $data['author_id'] = Auth::id();
 
-        Post::create($data);
+        try {
+            $post = Post::create($data);
+            return redirect()->route('dashboard.posts.index')->with('success', 'Пост успешно создан.');
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23000') {
+                return response()->json([
+                    'message' => 'A post with this title already exists.'
+                ], 409); 
+            }
 
-        return redirect()->route('dashboard.posts.index')->with('success', 'Пост успешно создан.');
+            throw $e;
+        }
     }
 
     /**

@@ -36,6 +36,11 @@
                                 Users
                             </x-nav-link>
                         @endcan
+                        @can('admin-access')
+                            <x-nav-link :href="route('dashboard.stats')" :active="request()->routeIs('dashboard.stats')">
+                                Statistics & Analytics
+                            </x-nav-link>
+                        @endcan
                     @endauth
                 </div>
             </div>

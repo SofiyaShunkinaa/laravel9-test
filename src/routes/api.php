@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\Dashboard\StatisticsController;
+use App\Http\Controllers\Api\PublicPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,8 @@ use App\Http\Controllers\Api\Dashboard\StatisticsController;
 */
 
 Route::middleware('throttle:60,1')->group(function () {
-    Route::get('/posts', [PostController::class, 'index']);      
-    Route::get('/posts/{post}', [PostController::class, 'show']);
+    Route::get('/posts', [PublicPostController::class, 'index']);      
+    Route::get('/posts/{post}', [PublicPostController::class, 'show']);
 });
 
 Route::get('/meta/roles', [MetaController::class, 'roles']);

@@ -9,17 +9,28 @@ use App\Models\Comment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class StatisticsController extends Controller
 {
     // -----------------------------
-    // Статистика по постам
+    // Posts statistics
     // -----------------------------
     public function posts(Request $request)
     {
         $from = $request->query('from') ? Carbon::parse($request->query('from')) : null;
         $to = $request->query('to') ? Carbon::parse($request->query('to')) : null;
 
+        // Create cache key based on date range
+        $cacheKey = 'stats_posts_' . ($from ? $from->format('Y-m-d') : 'all') . '_' . ($to ? $to->format('Y-m-d') : 'all');
+        
+        return Cache::remember($cacheKey, 600, function () use ($from, $to) { // 10 minutes cache
+            return $this->getPostsStats($from, $to);
+        });
+    }
+
+    private function getPostsStats($from, $to)
+    {
         // Total by status
         $queryStatus = Post::query();
         if ($from) $queryStatus->where('created_at', '>=', $from);
@@ -61,13 +72,23 @@ class StatisticsController extends Controller
     }
 
     // -----------------------------
-    // Статистика по комментариям
+    // Comments statistics
     // -----------------------------
     public function comments(Request $request)
     {
         $from = $request->query('from') ? Carbon::parse($request->query('from')) : null;
         $to = $request->query('to') ? Carbon::parse($request->query('to')) : null;
 
+        // Create cache key based on date range
+        $cacheKey = 'stats_comments_' . ($from ? $from->format('Y-m-d') : 'all') . '_' . ($to ? $to->format('Y-m-d') : 'all');
+        
+        return Cache::remember($cacheKey, 600, function () use ($from, $to) { // 10 minutes cache
+            return $this->getCommentsStats($from, $to);
+        });
+    }
+
+    private function getCommentsStats($from, $to)
+    {
         // Total comments
         $queryTotal = Comment::query();
         if ($from) $queryTotal->where('created_at', '>=', $from);
@@ -110,28 +131,37 @@ class StatisticsController extends Controller
     }
 
     // -----------------------------
-    // Статистика по пользователям
+    // Users statistics
     // -----------------------------
     public function users(Request $request)
-{
+    {
+        // Users stats don't change as frequently, cache for longer
+        $cacheKey = 'stats_users';
+        
+        return Cache::remember($cacheKey, 1800, function () { // 30 minutes cache
+            return $this->getUsersStats();
+        });
+    }
 
-    $users = User::with('role')->withCount('posts')->withCount('comments')->get();
+    private function getUsersStats()
+    {
+        $users = User::with('role')->withCount('posts')->withCount('comments')->get();
 
-    $countByRoles = $users->groupBy(function($user) {
-        return optional($user->role)->name ?? 'No Role';
-    })->map(function($group) {
-        return $group->count();
-    });
+        $countByRoles = $users->groupBy(function($user) {
+            return optional($user->role)->name ?? 'No Role';
+        })->map(function($group) {
+            return $group->count();
+        });
 
-    $top5Authors = $users->sortByDesc('posts_count')->take(5)->values();
+        $top5Authors = $users->sortByDesc('posts_count')->take(5)->values();
 
-    $top5Commenters = $users->sortByDesc('comments_count')->take(5)->values();
+        $top5Commenters = $users->sortByDesc('comments_count')->take(5)->values();
 
-    return response()->json([
-        'count_by_roles' => $countByRoles,
-        'top5_authors' => $top5Authors,
-        'top5_commenters' => $top5Commenters,
-    ]);
-}
+        return response()->json([
+            'count_by_roles' => $countByRoles,
+            'top5_authors' => $top5Authors,
+            'top5_commenters' => $top5Commenters,
+        ]);
+    }
 
 }
