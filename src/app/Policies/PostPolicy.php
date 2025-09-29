@@ -54,7 +54,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->id === $post->author_id || $user->role->name === 'admin';
+        return in_array($user->role->name, ['admin', 'editor']);
     }
 
     /**

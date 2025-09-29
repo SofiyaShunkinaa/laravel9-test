@@ -21,25 +21,33 @@
                 {{ $comment->body }}
             </div>
 
-            @unless(auth()->user()->role->name === 'viewer')
-                <div class="flex gap-3 text-sm">
-                    @can('update', $comment)
-                        <a href="{{ route('dashboard.comments.edit', $comment) }}" class="text-blue-600 hover:underline">
-                            Редактировать
-                        </a>
-                    @endcan
+            <div class="flex gap-3 text-sm">
+            @can('update', $comment)
+                <a href="{{ route('dashboard.comments.edit', $comment) }}" class="text-blue-600 hover:underline">
+                    Редактировать
+                </a>
+            @else
+                <span class="text-gray-400 cursor-not-allowed" title="Недоступно для вашей роли">
+                    Редактировать
+                </span>
+            @endcan
 
-                    @can('delete', $comment)
-                        <form action="{{ route('dashboard.comments.destroy', $comment) }}" method="POST"
-                            onsubmit="return confirm('Удалить комментарий?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline">Удалить</button>
-                        </form>
-                    @endcan
-                </div>
-            @endunless
+            @can('delete', $comment)
+                <form action="{{ route('dashboard.comments.destroy', $comment) }}" method="POST"
+                    onsubmit="return confirm('Удалить комментарий?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 hover:underline">Удалить</button>
+                </form>
+            @else
+                <button type="button" disabled
+                        class="text-gray-400 cursor-not-allowed"
+                        title="Недоступно для вашей роли">
+                    Удалить
+                </button>
+            @endcan
         </div>
+                </div>
     @endforeach
 
     {{ $comments->links() }}

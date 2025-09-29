@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\PostController;
 use App\Http\Controllers\Web\CommentController;
+use App\Http\Controllers\Web\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,5 +46,12 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')
     Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
+
+Route::middleware(['can:manage-users'])->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+});
+
 
 require __DIR__.'/auth.php';

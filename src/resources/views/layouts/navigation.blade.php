@@ -21,6 +21,11 @@
                         <x-nav-link :href="route('dashboard.comments.index')" :active="request()->routeIs('dashboard.comments.*')">
                             Comments
                         </x-nav-link>
+                        @can('manage-users')
+                            <x-nav-link :href="route('dashboard.users.index')" :active="request()->routeIs('dashboard.users.*')">
+                                Users
+                            </x-nav-link>
+                        @endcan
                     @endauth
                 </div>
             </div>
@@ -89,6 +94,11 @@
                 <x-responsive-nav-link :href="route('dashboard.comments.index')" :active="request()->routeIs('dashboard.comments.*')">
                     Comments
                 </x-responsive-nav-link>
+                @can('manage-users')
+                    <x-responsive-nav-link :href="route('dashboard.users.index')" :active="request()->routeIs('dashboard.users.*')">
+                        Users
+                    </x-responsive-nav-link>
+                @endcan
             </div>
 
             <div class="pt-4 pb-1 border-t border-gray-200">

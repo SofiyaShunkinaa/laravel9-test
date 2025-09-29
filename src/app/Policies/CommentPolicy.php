@@ -41,7 +41,7 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        //
+        return in_array($user->role->name, ['admin', 'editor']);
     }
 
     /**
@@ -53,7 +53,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        return $user->id === $comment->author_id || $user->role->name === 'admin';
+        return in_array($user->role->name, ['admin', 'editor']);
     }
 
     /**
