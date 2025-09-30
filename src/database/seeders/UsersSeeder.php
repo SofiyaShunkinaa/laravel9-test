@@ -15,6 +15,18 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+
+        $adminRole = \App\Models\Role::where('name', 'admin')->first();
+
+        User::firstOrCreate(
+            ['email' => 'admin@admin.com'],
+            [
+                'name' => 'Admin',
+                'password' => \Illuminate\Support\Facades\Hash::make('123admin'), 
+                'role_id' => $adminRole->id,
+                'email_verified_at' => now(),
+            ]
+        );
         User::factory()->count(10)->create();
 
     }

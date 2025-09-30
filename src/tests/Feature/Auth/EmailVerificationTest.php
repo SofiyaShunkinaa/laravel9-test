@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
 
 class EmailVerificationTest extends TestCase
 {
@@ -27,9 +28,9 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_can_be_verified(): void
     {
-        $user = User::factory()->create([
-            'email_verified_at' => null,
-        ]);
+        Notification::fake();
+
+        $user = User::factory()->unverified()->create();
 
         Event::fake();
 

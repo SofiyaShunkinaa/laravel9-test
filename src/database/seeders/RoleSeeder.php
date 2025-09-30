@@ -15,6 +15,8 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        // 
+        \App\Models\Role::firstOrCreate(['name' => 'admin']);
+        \App\Models\Role::firstOrCreate(['name' => 'editor']);
+        \App\Models\Role::firstOrCreate(['name' => 'viewer']);
     }
 }
