@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\Dashboard\StatisticsController;
 use App\Http\Controllers\Api\PublicPostController;
+use App\Http\Controllers\Api\MetaController;
 
 /*
 |--------------------------------------------------------------------------
