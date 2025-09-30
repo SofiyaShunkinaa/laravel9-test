@@ -21,17 +21,17 @@ class StatisticsController extends Controller
         $from = $request->query('from') ? Carbon::parse($request->query('from')) : null;
         $to = $request->query('to') ? Carbon::parse($request->query('to')) : null;
 
-        // Create cache key based on date range
-        $cacheKey = 'stats_posts_' . ($from ? $from->format('Y-m-d') : 'all') . '_' . ($to ? $to->format('Y-m-d') : 'all');
-        
-        return Cache::remember($cacheKey, 600, function () use ($from, $to) { // 10 minutes cache
-            return $this->getPostsStats($from, $to);
-        });
+        $period = $request->query('period', 'day');
+
+        $cacheKey = 'stats_posts_' . $period . '_' . ($from ? $from->format('Y-m-d') : 'all') . '_' . ($to ? $to->format('Y-m-d') : 'all');
+
+        return Cache::remember($cacheKey, 600, function () use ($from, $to, $period) {
+            return $this->getPostsStats($from, $to, $period);
+        });        
     }
 
-    private function getPostsStats($from, $to)
+    private function getPostsStats($from, $to, $period = 'day')
     {
-        // Total by status
         $queryStatus = Post::query();
         if ($from) $queryStatus->where('created_at', '>=', $from);
         if ($to) $queryStatus->where('created_at', '<=', $to);
@@ -39,22 +39,65 @@ class StatisticsController extends Controller
                                      ->groupBy('status')
                                      ->pluck('total', 'status');
 
-        // Total by period
-        $queryPeriod = Post::query();
-        if ($from) $queryPeriod->where('created_at', '>=', $from);
-        if ($to) $queryPeriod->where('created_at', '<=', $to);
-        $totalByPeriod = $queryPeriod->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
-                                     ->groupBy('date')
-                                     ->orderBy('date')
-                                     ->get();
+        $query = Post::query();
+        if ($from) $query->where('created_at', '>=', $from);
+        if ($to) $query->where('created_at', '<=', $to);
+        $periods = [];
 
-        // Average comments
+        if ($period === 'day') {
+            for ($i = 9; $i >= 0; $i--) {
+                $date = now()->subDays($i)->format('Y-m-d');
+                $periods[$date] = 0;
+            }
+
+            $totals = (clone $query)
+                ->selectRaw("DATE(created_at) as date, count(*) as total")
+                ->where('created_at', '>=', now()->subDays(9)->startOfDay())
+                ->groupByRaw("DATE(created_at)")
+                ->pluck('total', 'date');
+
+            foreach ($totals as $date => $count) {
+                $periods[$date] = $count;
+            }
+
+        } elseif ($period === 'week') {
+            for ($i = 9; $i >= 0; $i--) {
+                $week = now()->subWeeks($i)->format('o-\WW'); 
+                $periods[$week] = 0;
+            }
+
+            $totals = (clone $query)
+                ->selectRaw("TO_CHAR(created_at, 'IYYY-\"W\"IW') as week, count(*) as total")
+                ->where('created_at', '>=', now()->subWeeks(9)->startOfWeek())
+                ->groupByRaw("TO_CHAR(created_at, 'IYYY-\"W\"IW')")
+                ->pluck('total', 'week');
+
+            foreach ($totals as $week => $count) {
+                $periods[$week] = $count;
+            }
+
+        } elseif ($period === 'month') {
+            for ($i = 9; $i >= 0; $i--) {
+                $month = now()->subMonths($i)->format('Y-m');
+                $periods[$month] = 0;
+            }
+
+            $totals = (clone $query)
+                ->selectRaw("TO_CHAR(created_at, 'YYYY-MM') as month, count(*) as total")
+                ->where('created_at', '>=', now()->subMonths(9)->startOfMonth())
+                ->groupByRaw("TO_CHAR(created_at, 'YYYY-MM')")
+                ->pluck('total', 'month');
+
+            foreach ($totals as $month => $count) {
+                $periods[$month] = $count;
+            }
+        }
+
         $queryAvg = Post::query();
         if ($from) $queryAvg->where('created_at', '>=', $from);
         if ($to) $queryAvg->where('created_at', '<=', $to);
         $avgComments = $queryAvg->withCount('comments')->get()->avg('comments_count');
 
-        // Top 5 most commented
         $queryTop = Post::query();
         if ($from) $queryTop->where('created_at', '>=', $from);
         if ($to) $queryTop->where('created_at', '<=', $to);
@@ -65,7 +108,7 @@ class StatisticsController extends Controller
 
         return response()->json([
             'total_by_status' => $totalByStatus,
-            'total_by_period' => $totalByPeriod,
+            'posts_by_period' => collect($periods)->map(fn($v, $label) => ['label' => $label, 'total' => $v])->values(),
             'avg_comments' => $avgComments,
             'top5_most_commented' => $top5Posts,
         ]);
