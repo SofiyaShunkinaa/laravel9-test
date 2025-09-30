@@ -5,7 +5,7 @@
     <!-- Заголовок страницы -->
     <header class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-900 mb-4">Discover Posts</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find interesting content across our platform. Search by keywords, filter by date, and sort to find exactly what you're looking for.</p>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find interesting content across Laragram. Search by keywords, filter by date, and sort to find exactly what you're looking for</p>
     </header>
 
     <!-- Поисковая панель -->
@@ -25,7 +25,7 @@
                                 type="text" 
                                 name="q" 
                                 id="q" 
-                                placeholder="Search posts by title, content, or author..." 
+                                placeholder="Search posts by title or content..." 
                                 class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                             >
                         </div>

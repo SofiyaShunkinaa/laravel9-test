@@ -31,4 +31,12 @@ class UserController extends Controller
 
         return redirect()->route('dashboard.users.index')->with('success', 'Role updated.');
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('dashboard.users.index')->with('success', 'User and related data deleted.');
+    }
+
 }

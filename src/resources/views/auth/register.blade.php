@@ -1,52 +1,151 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        
+         <div class="flex justify-center">
+         <a href="{{ route('home') }}">
+                    <svg width="129" height="26" viewBox="0 0 129 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M110.396 19.6968V6.18327H112.402V8.29477H112.578C112.859 7.57334 113.314 7.01321 113.941 6.61437C114.569 6.20967 115.323 6.00732 116.202 6.00732C117.094 6.00732 117.836 6.20967 118.428 6.61437C119.026 7.01321 119.493 7.57334 119.827 8.29477H119.968C120.314 7.5968 120.833 7.04254 121.525 6.63197C122.217 6.21553 123.047 6.00732 124.015 6.00732C125.223 6.00732 126.211 6.38563 126.98 7.14224C127.748 7.893 128.132 9.06312 128.132 10.6526V19.6968H126.056V10.6526C126.056 9.65551 125.783 8.94288 125.238 8.51472C124.692 8.08655 124.05 7.87247 123.311 7.87247C122.361 7.87247 121.625 8.15987 121.103 8.73466C120.581 9.30359 120.32 10.025 120.32 10.8989V19.6968H118.208V10.4415C118.208 9.67311 117.959 9.05432 117.46 8.5851C116.962 8.11001 116.32 7.87247 115.534 7.87247C114.994 7.87247 114.49 8.01617 114.02 8.30357C113.557 8.59096 113.182 8.9898 112.894 9.50008C112.613 10.0045 112.472 10.5881 112.472 11.2509V19.6968H110.396Z" fill="black"/>
+<path d="M100.412 20.0136C99.556 20.0136 98.7789 19.8523 98.0809 19.5297C97.3829 19.2012 96.8287 18.7291 96.4181 18.1132C96.0075 17.4915 95.8022 16.7407 95.8022 15.861C95.8022 15.0867 95.9547 14.4592 96.2597 13.9782C96.5647 13.4914 96.9724 13.1102 97.4826 12.8345C97.9929 12.5588 98.556 12.3535 99.1718 12.2186C99.7935 12.0779 100.418 11.9664 101.046 11.8843C101.867 11.7787 102.533 11.6996 103.043 11.6468C103.559 11.5881 103.934 11.4913 104.169 11.3564C104.41 11.2215 104.53 10.9869 104.53 10.6526V10.5822C104.53 9.71416 104.292 9.03966 103.817 8.55871C103.348 8.07775 102.635 7.83728 101.679 7.83728C100.688 7.83728 99.9109 8.05429 99.3478 8.48832C98.7847 8.92235 98.3888 9.38571 98.1601 9.87839L96.1893 9.17456C96.5413 8.35342 97.0105 7.71411 97.597 7.25662C98.1894 6.79326 98.8346 6.47067 99.5325 6.28885C100.236 6.10116 100.928 6.00732 101.609 6.00732C102.043 6.00732 102.541 6.0601 103.104 6.16568C103.673 6.26539 104.222 6.4736 104.75 6.79033C105.283 7.10705 105.726 7.58507 106.078 8.22439C106.43 8.8637 106.606 9.72003 106.606 10.7934V19.6968H104.53V17.8669H104.424C104.283 18.1601 104.049 18.4739 103.72 18.8083C103.392 19.1426 102.955 19.427 102.409 19.6617C101.864 19.8963 101.198 20.0136 100.412 20.0136ZM100.729 18.1484C101.55 18.1484 102.242 17.9871 102.805 17.6645C103.374 17.3419 103.802 16.9255 104.09 16.4152C104.383 15.9049 104.53 15.3683 104.53 14.8052V12.9049C104.442 13.0104 104.248 13.1072 103.949 13.1952C103.656 13.2773 103.316 13.3506 102.929 13.4151C102.547 13.4738 102.175 13.5266 101.811 13.5735C101.453 13.6146 101.163 13.6498 100.94 13.6791C100.401 13.7495 99.8962 13.8638 99.427 14.0222C98.9636 14.1747 98.5882 14.4064 98.3008 14.7172C98.0193 15.0222 97.8785 15.4387 97.8785 15.9665C97.8785 16.688 98.1454 17.2334 98.6792 17.6029C99.2188 17.9666 99.9021 18.1484 100.729 18.1484Z" fill="black"/>
+<path d="M87.2177 19.6968V6.18327H89.2236V8.22439H89.3644C89.6107 7.55575 90.0565 7.01321 90.7016 6.59677C91.3468 6.18034 92.0741 5.97212 92.8835 5.97212C93.036 5.97212 93.2266 5.97506 93.4554 5.98092C93.6841 5.98679 93.8572 5.99559 93.9745 6.00732V8.11881C93.9041 8.10122 93.7428 8.07482 93.4906 8.03963C93.2442 7.99857 92.9832 7.97804 92.7076 7.97804C92.0507 7.97804 91.4641 8.11588 90.948 8.39155C90.4377 8.66135 90.033 9.03672 89.7339 9.51768C89.4406 9.99276 89.294 10.5353 89.294 11.1453V19.6968H87.2177Z" fill="black"/>
+<path d="M77.5752 25.046C76.5722 25.046 75.71 24.9169 74.9886 24.6589C74.2672 24.4066 73.666 24.0723 73.185 23.6559C72.71 23.2453 72.3316 22.8054 72.0501 22.3362L73.7041 21.1749C73.8918 21.4212 74.1294 21.7028 74.4167 22.0195C74.7041 22.3421 75.0971 22.6207 75.5957 22.8553C76.1001 23.0958 76.7599 23.216 77.5752 23.216C78.6661 23.216 79.5665 22.9521 80.2761 22.4242C80.9858 21.8963 81.3407 21.0693 81.3407 19.9432V17.1982H81.1647C81.0122 17.4446 80.7952 17.7496 80.5137 18.1132C80.238 18.471 79.8392 18.7907 79.3172 19.0722C78.801 19.3479 78.1031 19.4857 77.2233 19.4857C76.1323 19.4857 75.1528 19.2276 74.2848 18.7115C73.4226 18.1953 72.7393 17.4446 72.2349 16.4592C71.7363 15.4739 71.487 14.2773 71.487 12.8697C71.487 11.4855 71.7305 10.2802 72.2173 9.25374C72.7041 8.22145 73.3815 7.42378 74.2496 6.86071C75.1176 6.29178 76.1206 6.00732 77.2585 6.00732C78.1383 6.00732 78.8362 6.15395 79.3524 6.44721C79.8744 6.73461 80.2732 7.06306 80.5489 7.43257C80.8304 7.79622 81.0474 8.09535 81.1999 8.32996H81.4111V6.18327H83.417V20.0839C83.417 21.2453 83.1531 22.1896 82.6252 22.9169C82.1032 23.65 81.3993 24.1867 80.5137 24.5269C79.6339 24.8729 78.6544 25.046 77.5752 25.046ZM77.5048 17.6205C78.3377 17.6205 79.0415 17.4299 79.6163 17.0487C80.1911 16.6674 80.6281 16.119 80.9272 15.4035C81.2263 14.6879 81.3759 13.8316 81.3759 12.8345C81.3759 11.8609 81.2293 11.0016 80.936 10.2567C80.6427 9.51181 80.2087 8.92822 79.6339 8.50592C79.0591 8.08362 78.3494 7.87247 77.5048 7.87247C76.625 7.87247 75.8919 8.09535 75.3053 8.54111C74.7247 8.98687 74.2877 9.58513 73.9944 10.3359C73.7071 11.0866 73.5634 11.9195 73.5634 12.8345C73.5634 13.7729 73.71 14.6029 74.0032 15.3243C74.3024 16.0398 74.7423 16.6029 75.3229 17.0135C75.9095 17.4182 76.6367 17.6205 77.5048 17.6205Z" fill="black"/>
+<path d="M51.1914 15.1967C51.1914 14.5112 51.3406 13.8862 51.639 13.3217C51.9374 12.7571 52.385 12.2732 52.9818 11.87C53.5786 11.4587 54.3205 11.1442 55.2076 10.9264C56.1028 10.7006 57.1432 10.5877 58.3287 10.5877C59.2078 10.5877 60.1312 10.6522 61.0989 10.7813C62.0748 10.9103 63.0788 11.1079 64.1111 11.374C64.0708 10.9224 63.9337 10.5071 63.6998 10.128C63.4659 9.74092 63.1393 9.41027 62.7199 9.13607C62.3086 8.8538 61.8086 8.63605 61.2199 8.48282C60.6392 8.32959 59.9779 8.25298 59.236 8.25298C58.8327 8.25298 58.3892 8.27717 57.9053 8.32556C57.4214 8.37395 56.9214 8.44653 56.4053 8.54331C55.8891 8.64008 55.377 8.76106 54.8689 8.90622C54.3689 9.05139 53.9012 9.22478 53.4657 9.4264L52.3769 6.4868C52.9173 6.29325 53.4939 6.11582 54.1068 5.95453C54.7278 5.79323 55.3609 5.65613 56.0061 5.54323C56.6512 5.42225 57.2964 5.32951 57.9416 5.26499C58.5868 5.20047 59.2118 5.16821 59.8166 5.16821C62.4861 5.16821 64.47 5.84969 65.7684 7.21263C67.0668 8.57557 67.7161 10.6643 67.7161 13.4789V19.6968H64.1353V18.3541C63.7643 18.5718 63.3571 18.7775 62.9135 18.971C62.478 19.1646 62.0022 19.3339 61.486 19.4791C60.9699 19.6243 60.4134 19.7372 59.8166 19.8178C59.2279 19.9065 58.6029 19.9509 57.9416 19.9509C56.8287 19.9509 55.8488 19.8299 55.002 19.588C54.1633 19.346 53.4616 19.0113 52.8971 18.5839C52.3326 18.1565 51.9051 17.6565 51.6148 17.0839C51.3325 16.5032 51.1914 15.8742 51.1914 15.1967ZM54.9657 15.0757C54.9657 15.3096 55.0262 15.5354 55.1472 15.7532C55.2681 15.9629 55.4617 16.1524 55.7278 16.3217C55.994 16.483 56.3327 16.6161 56.744 16.721C57.1633 16.8177 57.6674 16.8661 58.2561 16.8661C58.8852 16.8661 59.4941 16.8097 60.0828 16.6968C60.6715 16.5839 61.2199 16.4347 61.728 16.2492C62.2361 16.0637 62.6958 15.85 63.1071 15.608C63.5184 15.3661 63.8611 15.1161 64.1353 14.858V14.2289C63.5869 14.0757 63.0425 13.9467 62.5022 13.8418C61.9699 13.737 61.4578 13.6564 60.9659 13.5999C60.482 13.5354 60.0223 13.491 59.5868 13.4668C59.1594 13.4426 58.7844 13.4305 58.4618 13.4305C57.7924 13.4305 57.2359 13.4749 56.7924 13.5636C56.3488 13.6523 55.9899 13.7733 55.7157 13.9265C55.4415 14.0717 55.248 14.2451 55.1351 14.4467C55.0222 14.6483 54.9657 14.858 54.9657 15.0757Z" fill="#232EC9"/>
+<path d="M39.433 5.42225H43.0138V7.47876C43.8041 6.89004 44.6388 6.38196 45.5179 5.95453C46.3969 5.5271 47.2719 5.20047 48.1429 4.97466L49.1954 8.25298C47.8163 8.39008 46.6026 8.70057 45.5542 9.18445C44.5138 9.66027 43.667 10.3337 43.0138 11.2047V19.6968H39.433V5.42225Z" fill="#232EC9"/>
+<path d="M18.1663 15.1967C18.1663 14.5112 18.3155 13.8862 18.6139 13.3217C18.9123 12.7571 19.3599 12.2732 19.9567 11.87C20.5535 11.4587 21.2954 11.1442 22.1825 10.9264C23.0777 10.7006 24.1181 10.5877 25.3036 10.5877C26.1827 10.5877 27.1061 10.6522 28.0738 10.7813C29.0497 10.9103 30.0537 11.1079 31.086 11.374C31.0457 10.9224 30.9086 10.5071 30.6747 10.128C30.4408 9.74092 30.1142 9.41027 29.6948 9.13607C29.2835 8.8538 28.7835 8.63605 28.1948 8.48282C27.6141 8.32959 26.9528 8.25298 26.2109 8.25298C25.8076 8.25298 25.3641 8.27717 24.8802 8.32556C24.3963 8.37395 23.8963 8.44653 23.3802 8.54331C22.864 8.64008 22.3519 8.76106 21.8438 8.90622C21.3438 9.05139 20.8761 9.22478 20.4406 9.4264L19.3518 6.4868C19.8922 6.29325 20.4688 6.11582 21.0817 5.95453C21.7027 5.79323 22.3358 5.65613 22.981 5.54323C23.6261 5.42225 24.2713 5.32951 24.9165 5.26499C25.5617 5.20047 26.1867 5.16821 26.7915 5.16821C29.461 5.16821 31.4449 5.84969 32.7433 7.21263C34.0417 8.57557 34.691 10.6643 34.691 13.4789V19.6968H31.1102V18.3541C30.7392 18.5718 30.332 18.7775 29.8884 18.971C29.4529 19.1646 28.9771 19.3339 28.4609 19.4791C27.9448 19.6243 27.3883 19.7372 26.7915 19.8178C26.2028 19.9065 25.5778 19.9509 24.9165 19.9509C23.8036 19.9509 22.8237 19.8299 21.9769 19.588C21.1382 19.346 20.4365 19.0113 19.872 18.5839C19.3075 18.1565 18.88 17.6565 18.5897 17.0839C18.3074 16.5032 18.1663 15.8742 18.1663 15.1967ZM21.9406 15.0757C21.9406 15.3096 22.0011 15.5354 22.1221 15.7532C22.243 15.9629 22.4366 16.1524 22.7027 16.3217C22.9689 16.483 23.3076 16.6161 23.7189 16.721C24.1382 16.8177 24.6423 16.8661 25.231 16.8661C25.8601 16.8661 26.469 16.8097 27.0577 16.6968C27.6464 16.5839 28.1948 16.4347 28.7029 16.2492C29.211 16.0637 29.6707 15.85 30.082 15.608C30.4933 15.3661 30.836 15.1161 31.1102 14.858V14.2289C30.5618 14.0757 30.0174 13.9467 29.4771 13.8418C28.9448 13.737 28.4327 13.6564 27.9408 13.5999C27.4569 13.5354 26.9972 13.491 26.5617 13.4668C26.1343 13.4426 25.7593 13.4305 25.4367 13.4305C24.7673 13.4305 24.2108 13.4749 23.7673 13.5636C23.3237 13.6523 22.9648 13.7733 22.6906 13.9265C22.4164 14.0717 22.2229 14.2451 22.11 14.4467C21.9971 14.6483 21.9406 14.858 21.9406 15.0757Z" fill="#232EC9"/>
+<path d="M0.734375 0.789062H4.56916V16.3338H15.5654V19.6968H0.734375V0.789062Z" fill="#232EC9"/>
+</svg>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </a>
+            </div>
+        
+        <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+                Create your account
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Or
+                <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
+                    sign in to existing account
+                </a>
+            </p>
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-100">
+                <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                    @csrf
+
+                    <!-- Name -->
+                    <div>
+                        <x-input-label for="name" :value="__('Full Name')" class="block text-sm font-medium text-gray-700 mb-2" />
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <x-text-input 
+                                id="name" 
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                                type="text" 
+                                name="name" 
+                                :value="old('name')" 
+                                required 
+                                autofocus 
+                                autocomplete="name"
+                                placeholder="Enter your full name"
+                            />
+                        </div>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+
+                    <!-- Email Address -->
+                    <div>
+                        <x-input-label for="email" :value="__('Email Address')" class="block text-sm font-medium text-gray-700 mb-2" />
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                                </svg>
+                            </div>
+                            <x-text-input 
+                                id="email" 
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                                type="email" 
+                                name="email" 
+                                :value="old('email')" 
+                                required 
+                                autocomplete="email"
+                                placeholder="Enter your email address"
+                            />
+                        </div>
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <x-input-label for="password" :value="__('Password')" class="block text-sm font-medium text-gray-700 mb-2" />
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <x-text-input 
+                                id="password" 
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                type="password"
+                                name="password"
+                                required 
+                                autocomplete="new-password"
+                                placeholder="Create a password"
+                            />
+                        </div>
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="block text-sm font-medium text-gray-700 mb-2" />
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <x-text-input 
+                                id="password_confirmation" 
+                                class="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                type="password"
+                                name="password_confirmation" 
+                                required 
+                                autocomplete="new-password"
+                                placeholder="Confirm your password"
+                            />
+                        </div>
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <x-primary-button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                            {{ __('Create Account') }}
+                        </x-primary-button>
+                    </div>
+
+                    <!-- Login Link -->
+                    <div class="text-center pt-4 border-t border-gray-100">
+                        <p class="text-sm text-gray-600">
+                            Already have an account?
+                            <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200 ml-1">
+                                Sign in here
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </x-guest-layout>

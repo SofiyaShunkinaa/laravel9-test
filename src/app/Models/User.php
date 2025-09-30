@@ -57,7 +57,10 @@ class User extends Authenticatable implements MustVerifyEmail
             Cache::forget('stats_users');
         });
 
-        static::deleted(function () {
+        static::deleting(function (User $user) {
+            $user->posts()->delete();
+            $user->comments()->delete();
+    
             Cache::forget('stats_users');
         });
     }
